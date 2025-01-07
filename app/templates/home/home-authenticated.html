@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Bienvenido de vuelta, {{ current_user.username }}! 👋</h2>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3>Películas Populares</h3>
+            </div>
+            <div class="card-body">
+                <!-- Aquí irían las películas populares -->
+                <p class="text-muted">Próximamente: Lista de películas populares</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Mi Lista</h4>
+            </div>
+            <div class="card-body">
+                <!-- Aquí iría la watchlist del usuario -->
+                <p class="text-muted">Próximamente: Tu lista de películas</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h4>Mis Reseñas Recientes</h4>
+            </div>
+            <div class="card-body">
+                <!-- Aquí irían las reseñas recientes -->
+                <p class="text-muted">Próximamente: Tus reseñas recientes</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

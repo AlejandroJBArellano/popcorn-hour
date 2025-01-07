@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Bienvenido{% endblock %}
+
+{% block content %}
+<div class="jumbotron text-center py-5">
+    <h1 class="display-4">¡Bienvenido a PopcornHour! 🍿</h1>
+    <p class="lead">Tu destino para descubrir, calificar y discutir sobre películas y series.</p>
+    <hr class="my-4">
+    <p>Únete a nuestra comunidad para acceder a todas las funciones.</p>
+    <a class="btn btn-primary btn-lg me-2" href="{{ url_for('auth.register') }}" role="button">Registrarse</a>
+    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('auth.login') }}" role="button">Iniciar Sesión</a>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <h3>📝 Reseñas</h3>
+        <p>Comparte tus opiniones sobre tus películas y series favoritas.</p>
+    </div>
+    <div class="col-md-4">
+        <h3>⭐ Calificaciones</h3>
+        <p>Califica el contenido y ayuda a otros a descubrir joyas ocultas.</p>
+    </div>
+    <div class="col-md-4">
+        <h3>💬 Discusiones</h3>
+        <p>Participa en conversaciones con otros amantes del cine y las series.</p>
+    </div>
+</div>
+{% endblock %}
