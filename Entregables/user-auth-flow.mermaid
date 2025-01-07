@@ -1,0 +1,19 @@
+flowchart TD
+    A[Inicio] --> B{¿Usuario Registrado?}
+    B -->|No| C[Página de Registro]
+    B -->|Sí| D[Página de Login]
+    
+    C --> E[Llenar formulario]
+    E --> F{Validar datos}
+    F -->|Inválido| E
+    F -->|Válido| G[Crear cuenta]
+    G --> H[Iniciar sesión]
+    
+    D --> I[Ingresar credenciales]
+    I --> J{Validar credenciales}
+    J -->|Inválido| K[Mostrar error]
+    K --> D
+    J -->|Válido| L[Acceso al sistema]
+    L --> M{¿Tipo de usuario?}
+    M -->|Moderador| N[Panel moderador]
+    M -->|Estándar| O[Home usuario]

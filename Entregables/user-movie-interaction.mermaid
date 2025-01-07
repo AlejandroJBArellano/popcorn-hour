@@ -1,0 +1,22 @@
+flowchart TD
+    A[Home usuario] --> B[Ver catálogo]
+    B --> C[Seleccionar película]
+    C --> D{Acciones disponibles}
+    
+    D -->|Ver detalles| E[Página de película]
+    E --> F[Ver información]
+    
+    D -->|Calificar| G[Seleccionar estrellas]
+    G --> H[Escribir reseña]
+    H --> I{Validar reseña}
+    I -->|Inválido| H
+    I -->|Válido| J[Publicar reseña]
+    
+    D -->|Comentar| K[Escribir comentario]
+    K --> L{Validar comentario}
+    L -->|Inválido| K
+    L -->|Válido| M[Publicar comentario]
+    
+    D -->|Agregar a lista| N{¿En lista?}
+    N -->|No| O[Agregar a watchlist]
+    N -->|Sí| P[Remover de watchlist]

@@ -1,0 +1,20 @@
+flowchart TD
+    A[Panel Moderador] --> B[Gestión de Películas]
+    B --> C{Acción}
+    
+    C -->|Agregar| D[Formulario nueva película]
+    D --> E[Llenar datos]
+    E --> F{Validar información}
+    F -->|Inválido| E
+    F -->|Válido| G[Guardar película]
+    
+    C -->|Editar| H[Seleccionar película]
+    H --> I[Modificar datos]
+    I --> J{Validar cambios}
+    J -->|Inválido| I
+    J -->|Válido| K[Actualizar película]
+    
+    C -->|Eliminar| L[Seleccionar película]
+    L --> M{Confirmar eliminación}
+    M -->|No| B
+    M -->|Sí| N[Eliminar película]

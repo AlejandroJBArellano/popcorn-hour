@@ -1,0 +1,21 @@
+flowchart TD
+    A[Inicio] --> B{Método de búsqueda}
+    
+    B -->|Búsqueda directa| C[Ingresar término]
+    C --> D[Buscar]
+    
+    B -->|Filtros| E[Seleccionar filtros]
+    E --> F[Aplicar filtros]
+    
+    D --> G[Mostrar resultados]
+    F --> G
+    
+    G --> H{¿Resultados encontrados?}
+    H -->|Sí| I[Mostrar películas]
+    H -->|No| J[Mostrar mensaje]
+    J --> K[Sugerir alternativas]
+    
+    I --> L{Ordenar por}
+    L -->|Rating| M[Ordenar por rating]
+    L -->|Fecha| N[Ordenar por fecha]
+    L -->|Nombre| O[Ordenar alfabéticamente]
