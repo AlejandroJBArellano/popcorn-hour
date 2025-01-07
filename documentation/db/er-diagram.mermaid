@@ -1,0 +1,72 @@
+erDiagram
+    USERS ||--o{ REVIEWS : writes
+    USERS ||--o{ COMMENTS : makes
+    USERS ||--o{ WATCHLIST : has
+    USERS {
+        int id PK
+        string username
+        string email
+        string password_hash
+        string user_type
+        datetime created_at
+        datetime last_login
+        string profile_picture
+    }
+
+    MOVIES ||--o{ REVIEWS : receives
+    MOVIES ||--o{ COMMENTS : has
+    MOVIES ||--o{ MOVIE_GENRES : belongs_to
+    MOVIES ||--o{ WATCHLIST : contains
+    MOVIES {
+        int id PK
+        string title
+        text description
+        date release_date
+        string poster_url
+        float average_rating
+        int duration
+        string content_type
+        int moderator_id FK
+        datetime created_at
+        datetime updated_at
+    }
+
+    GENRES ||--o{ MOVIE_GENRES : has
+    GENRES {
+        int id PK
+        string name
+        string description
+    }
+
+    MOVIE_GENRES {
+        int movie_id PK, FK
+        int genre_id PK, FK
+    }
+
+    REVIEWS {
+        int id PK
+        int user_id FK
+        int movie_id FK
+        int rating
+        text content
+        datetime created_at
+        datetime updated_at
+    }
+
+    COMMENTS {
+        int id PK
+        int user_id FK
+        int movie_id FK
+        text content
+        int parent_comment_id FK
+        datetime created_at
+        datetime updated_at
+    }
+
+    WATCHLIST {
+        int id PK
+        int user_id FK
+        int movie_id FK
+        datetime added_at
+        string status
+    }
