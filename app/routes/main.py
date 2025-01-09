@@ -7,5 +7,5 @@ bp = Blueprint('main', __name__)
 @bp.route('/')
 def home():
     if current_user.is_authenticated:
-        return render_template('home/home_authenticated.html')
-    return render_template('home/home_guest.html')
+        return render_template('home/home-authenticated.html')
+    return render_template('home/home-guest.html')
