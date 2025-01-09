@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Películas{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Barra de búsqueda y filtros -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <form class="d-flex" action="{{ url_for('movies.list') }}" method="GET">
+                <input type="search" name="search" class="form-control me-2" 
+                       placeholder="Buscar películas..." 
+                       value="{{ request.args.get('search', '') }}">
+                <button class="btn btn-outline-primary" type="submit">Buscar</button>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select" onchange="location = this.value;">
+                <option value="{{ url_for('movies.list', sort_by='date') }}" 
+                        {% if request.args.get('sort_by') == 'date' %}selected{% endif %}>
+                    Más recientes
+                </option>
+                <option value="{{ url_for('movies.list', sort_by='rating') }}"
+                        {% if request.args.get('sort_by') == 'rating' %}selected{% endif %}>
+                    Mejor valoradas
+                </option>
+                <option value="{{ url_for('movies.list', sort_by='title') }}"
+                        {% if request.args.get('sort_by') == 'title' %}selected{% endif %}>
+                    Por título
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Grid de películas -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        {% for movie in movies.items %}
+        <div class="col">
+            <div class="card h-100">
+                <img src="{{ movie.poster_url or url_for('static', filename='img/default_poster.jpg') }}" 
+                     class="card-img-top" alt="{{ movie.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text text-muted">
+                        {{ movie.release_date.strftime('%Y') }} • 
+                        {{ movie.duration }} min
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="rating">
+                            <span class="text-warning">★</span>
+                            <span>{{ "%.1f"|format(movie.average_rating or 0) }}/5.0</span>
+                        </div>
+                        <a href="{{ url_for('movies.detail', id=movie.id) }}" 
+                           class="btn btn-sm btn-primary">Ver más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Paginación -->
+    {% if movies.pages > 1 %}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% for page in range(1, movies.pages + 1) %}
+            <li class="page-item {{ 'active' if page == movies.page else '' }}">
+                <a class="page-link" 
+                   href="{{ url_for('movies.list', page=page, **request.args) }}">
+                    {{ page }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </nav>
+    {% endif %}
+
+    <!-- Mensaje si no hay resultados -->
+    {% if not movies.items %}
+    <div class="text-center mt-5">
+        <h3>No se encontraron películas</h3>
+        <p>Intenta con otros términos de búsqueda o filtros diferentes.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
