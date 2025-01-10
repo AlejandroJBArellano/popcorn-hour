@@ -26,10 +26,12 @@ def register():
     
     if request.method == 'POST':
         hashed_password = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
+        print(request.form)
         user = User(
             username=request.form['username'],
             email=request.form['email'],
-            password_hash=hashed_password
+            password_hash=hashed_password,
+            user_type=request.form['user_type']
         )
         db.session.add(user)
         db.session.commit()
