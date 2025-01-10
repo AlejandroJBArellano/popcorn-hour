@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Agregar Película{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Agregar Nueva Película</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        {{ form.csrf_token }}
+
+                        <div class="mb-3">
+                            <label for="title" class="form-label">{{ form.title.label }}</label>
+                            {{ form.title(class="form-control") }}
+                            {% if form.title.errors %}
+                                {% for error in form.title.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">{{ form.description.label }}</label>
+                            {{ form.description(class="form-control", rows="4") }}
+                            {% if form.description.errors %}
+                                {% for error in form.description.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="release_date" class="form-label">{{ form.release_date.label }}</label>
+                                    {{ form.release_date(class="form-control", type="date") }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="duration" class="form-label">{{ form.duration.label }}</label>
+                                    {{ form.duration(class="form-control", type="number") }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="content_type" class="form-label">{{ form.content_type.label }}</label>
+                            {{ form.content_type(class="form-select") }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="genres" class="form-label">{{ form.genres.label }}</label>
+                            {{ form.genres(class="form-select", multiple="multiple", size="5") }}
+                            <div class="form-text">
+                                Mantén presionado Ctrl (Cmd en Mac) para seleccionar múltiples géneros.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="poster" class="form-label">{{ form.poster.label }}</label>
+                            {{ form.poster(class="form-control") }}
+                            <div class="form-text">
+                                Formatos permitidos: JPG, PNG. Tamaño máximo: 5MB
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Guardar Película</button>
+                            <a href="{{ url_for('moderator.dashboard') }}" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
