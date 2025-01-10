@@ -19,8 +19,12 @@ def create_app():
     login_manager.login_view = 'auth.login'
     login_manager.login_message_category = 'info'
 
-    from app.routes import main, auth
+    from app.routes import main, auth, moderator, users, movies, review
     app.register_blueprint(main.bp)
     app.register_blueprint(auth.bp)
+    app.register_blueprint(moderator.bp)
+    app.register_blueprint(users.bp)
+    app.register_blueprint(movies.bp)
+    app.register_blueprint(review.bp)
 
     return app
