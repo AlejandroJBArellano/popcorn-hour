@@ -14,3 +14,11 @@ class User(UserMixin, db.Model):
     user_type = db.Column(db.String(20), default='standard')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     last_login = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Relaciones
+    reviews = db.relationship('Review', backref='user', lazy='dynamic')
+    comments = db.relationship('Comment', backref='user', lazy='dynamic')
+    watchlist = db.relationship('Watchlist', backref='user', lazy='dynamic')
+
+    def __repr__(self):
+        return f'<User {self.username}>'
