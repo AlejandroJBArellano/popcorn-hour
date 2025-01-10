@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Panel de Moderador{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Panel de Moderador</h2>
+        <a href="{{ url_for('moderator.add_movie') }}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Agregar Película
+        </a>
+    </div>
+
+    <!-- Estadísticas -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Películas Subidas</h5>
+                    <p class="card-text display-4">{{ movies|length }}</p>
+                </div>
+            </div>
+        </div>
+        <!-- Agregar más estadísticas según necesites -->
+    </div>
+
+    <!-- Lista de películas -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Mis Películas</h3>
+        </div>
+        <div class="card-body">
+            {% if movies %}
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Fecha</th>
+                            <th>Rating</th>
+                            <th>Reseñas</th>
+                            <th>Comentarios</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for movie in movies %}
+                        <tr>
+                            <td>
+                                <a href="{{ url_for('movies.detail', id=movie.id) }}">
+                                    {{ movie.title }}
+                                </a>
+                            </td>
+                            <td>{{ movie.release_date.strftime('%Y-%m-%d') }}</td>
+                            <td>
+                                <span class="text-warning">★</span>
+                                {{ "%.1f"|format(movie.average_rating or 0) }}
+                            </td>
+                            <td>{{ movie.reviews.count() }}</td>
+                            <td>{{ movie.comments.count() }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{{ url_for('moderator.edit_movie', id=movie.id) }}" 
+                                       class="btn btn-sm btn-outline-primary">
+                                        Editar
+                                    </a>
+                                    <button type="button" 
+                                            class="btn btn-sm btn-outline-danger"
+                                            onclick="confirmDelete({{ movie.id }});">
+                                        Eliminar
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-center">No has subido ninguna película aún.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación de eliminación -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar Eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que quieres eliminar esta película?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form id="deleteForm" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+function confirmDelete(movieId) {
+    const modal = document.getElementById('deleteModal');
+    const deleteForm = document.getElementById('deleteForm');
+    deleteForm.action = `/moderator/movies/${movieId}/delete`;
+    new bootstrap.Modal(modal).show();
+}
+</script>
+{% endblock %}
