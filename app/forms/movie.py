@@ -20,9 +20,9 @@ class MovieForm(FlaskForm):
         choices=[('movie', 'Película'), ('series', 'Serie')],
         validators=[DataRequired()])
     
-    genres = SelectMultipleField('Géneros',
-        coerce=int,
-        validators=[DataRequired()])
+    genres = SelectField('Géneros',
+        choices=[("action", "Acción"), ("adventure", "Aventura"), ("comedy", "Comedia"), ("drama", "Drama"), ("fantasy", "Fantasía"), ("horror", "Terror"), ("mystery", "Misterio"), ("romance", "Romance"), ("sci-fi", "Ciencia Ficción"), ("thriller", "Thriller")],
+        )
     
     poster = FileField('Póster',
         validators=[FileAllowed(['jpg', 'png'], 'Solo imágenes!')])
